@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Suspense } from "react";
+import Constants from "expo-constants";
+import { StyleSheet } from "react-native";
+import Events from "./components/Events/Events";
+import { Route, Routes, NativeRouter } from "react-router-native";
+import Add from "./components/Add";
+import { View, TextField, Text, Button } from "react-native-ui-lib";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <View style={styles.container} paddingH-10 paddingT-10>
+        <NativeRouter>
+          <Routes>
+            <Route path="/" element={<Events />} />
+            <Route path="/add" element={<Add />} />
+          </Routes>
+        </NativeRouter>
+      </View>
+    </QueryClientProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: Constants.statusBarHeight,
+    height: "100%",
   },
 });
